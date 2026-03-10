@@ -1,0 +1,45 @@
+;;; CircuitDAO — recharge_auction.clsp input_conditions injection
+;;; Platform: Cantina | Severity: Medium | Status: Acknowledged
+;;; Researcher: Limbowalker
+;;;
+;;; ROOT CAUSE:
+;;; recharge_auction.clsp passes raw `input_conditions` to operation
+;;; programs instead of sanitized `inner_conditions`.
+;;;
+;;; In Chialisp's puzzle layer model:
+;;;   inner_conditions = protocol-validated subset (safe)
+;;;   input_conditions = raw user input (unsafe, unsanitized)
+;;;
+;;; The recharge auction delegates to operation programs with:
+;;;   (operation_program ... input_conditions ...)   ; WRONG
+;;; It should use:
+;;;   (operation_program ... inner_conditions ...)   ; CORRECT
+;;;
+;;; IMPACT:
+;;; An attacker can inject arbitrary conditions into the recharge
+;;; auction flow by crafting malicious input_conditions that survive
+;;; the delegation boundary unfiltered.
+;;;
+;;; DEMONSTRATING THE BOUNDARY VIOLATION:
+
+(mod (
+  input_conditions     ;; raw user-supplied — attacker controlled
+  inner_conditions     ;; protocol-validated — safe subset
+  operation_program
+)
+
+  ;; VULNERABLE: passes unsanitized input_conditions
+  ;; An attacker can inject CREATE_COIN or AGG_SIG conditions here
+  (defun vulnerable_delegation (op input inner)
+    (op input)   ;; input_conditions passed — WRONG
+  )
+
+  ;; CORRECT: pass sanitized inner_conditions only
+  (defun safe_delegation (op input inner)
+    (op inner)   ;; inner_conditions passed — CORRECT
+  )
+
+  ;; The fix is one argument swap in recharge_auction.clsp
+  ;; Current:  (operation_program ... input_conditions ...)
+  ;; Fixed:    (operation_program ... inner_conditions ...)
+)
