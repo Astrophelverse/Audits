@@ -34,7 +34,7 @@
 | 04 | [Jupiter Lend H-02](#03--jupiter-lend) | 🟠 High | Code4rena | Solidity | ⏳ Pending |
 | 05 | [Jupiter Lend H-03](#03--jupiter-lend) | 🟠 High | Code4rena | Solidity | ⏳ Pending |
 | 06 | [Morpho Blue](#06--morpho-blue) | 🔴 Critical | Cantina | Solidity | ✅ Valid • Duplicated |
-| 07 | [CircuitDAO](#07--circuitdao) | 🟡 Medium | Cantina | Chialisp | ⏳ Acknowledged |
+| 07 | [CircuitDAO](#07--circuitdao) | 🟡 Medium | Cantina | Chialisp | ✅ Acknowledged |
 
 > **On duplicates:** Duplicate = two researchers independently confirmed the same real bug.
 > It reflects competition, not quality. Every finding here is original independent research.
