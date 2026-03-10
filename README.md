@@ -147,9 +147,9 @@ Specialty    Post-audit regressions · State machine violations · Economic logi
 
 | Platform | Handle | KYC |
 |---|---|:-:|
-| Code4rena | astrophel12 | — |
+| Code4rena | astrophel12 | ✅ Verified |
 | Immunefi | Limbowalker | ✅ Verified |
-| Cantina | Limbowalker | — |
+| Cantina | Limbowalker | ✅ Verified |
 
 ---
 
